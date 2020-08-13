@@ -1,35 +1,47 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { HttpClientModule } from '@angular/common/http';
+import { IData } from './models/data.model';
+import { By } from '@angular/platform-browser';
+import { IName } from './models/name.model';
+import { UserModule } from './user/user.module';
 
 describe('AppComponent', () => {
+  let component: AppComponent;
+  let fixture: ComponentFixture<AppComponent>;
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule
-      ],
-      declarations: [
-        AppComponent
-      ],
+      imports: [RouterTestingModule, HttpClientModule, UserModule],
+      declarations: [AppComponent],
     }).compileComponents();
   }));
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
-
-  it(`should have as title 'userproject'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('userproject');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
     fixture.detectChanges();
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('userproject app is running!');
+  });
+
+  it('should the info of the user', () => {
+    const name: IName = {
+      first: 'Joana',
+      last: 'Doe',
+    };
+
+    const user: IData = {
+      gender: 'Female',
+      knowFor: 'Demo info',
+      profession: 'Web dev',
+      name,
+    };
+
+    component.user = user;
+    fixture.detectChanges();
+
+    const pElements = fixture.debugElement.queryAll(By.css('p'));
+    console.log(pElements);
+    expect(pElements.length).toBe(4);
   });
 });

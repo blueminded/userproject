@@ -1,0 +1,8 @@
+<h1>Info User</h1>
+<hr />
+<div *ngIf="user">
+  <p><strong>Name:</strong> {{ user.name.first }} {{ user.name.last }}</p>
+  <p><strong>Gender:</strong> {{ user.gender }}</p>
+  <p><strong>KnowFor:</strong> {{ user.knowFor }}</p>
+  <p><strong>Profession:</strong> {{ user.profession }}</p>
+</div>
